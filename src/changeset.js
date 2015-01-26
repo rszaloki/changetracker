@@ -11,14 +11,19 @@ define(["./clock"], function (Clock) {
         this.version = "";
         this.previous = null;
         this.next = null;
+        this.clock = null;
         this.setClock(clock);
+        this.generateHash();
     }
+
+    ChangeSet.prototype.generateHash = function () {
+        if (this.version === "" && this.clock !== null) {
+            this.version = Clock.getHash(this.clock);
+        }
+    };
 
     ChangeSet.prototype.setClock = function (clock) {
         if (clock) {
-            if (this.version === "") {
-                this.version = Clock.getHash(clock);
-            }
             this.clock = clock;
         }
     };

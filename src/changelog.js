@@ -7,6 +7,9 @@ define(["./changeset", "./clock"], function (ChangeSet, Clock) {
         this.HEAD = null;
     }
 
+    /**
+     * Creates a new changeset by incrementing the current HEAD
+     */
     ChangeLog.prototype.commit = function () {
         var headClock = (this.HEAD && this.HEAD.clock) || {},
             newClock = Clock.mergeClocks({}, headClock);
@@ -15,6 +18,9 @@ define(["./changeset", "./clock"], function (ChangeSet, Clock) {
         this.addChangeSet(new ChangeSet(newClock));
     };
 
+    /**
+     * Dumps the current state of the ChangeLog to the console
+     */
     ChangeLog.prototype.dump = function () {
         var current = this.HEAD;
         do {
@@ -23,6 +29,10 @@ define(["./changeset", "./clock"], function (ChangeSet, Clock) {
         } while (current);
     };
 
+    /**
+     * Adds a new changeset and places after it's parent
+     * @param {Clock} changeSet the changeset to add
+     */
     ChangeLog.prototype.addChangeSet = function (changeSet) {
         var version = changeSet.version,
             mutualParent,

@@ -54,6 +54,12 @@ define(["./md5-min"], function () {
         return mutualParent;
     }
 
+    /**
+     * Check for equality of two clock
+     * @param   {Clock}   clockA
+     * @param   {Clock}   clockB
+     * @returns {Boolean} true if the two clocks has the same keys and the keys have the same counter
+     */
     function equals(clockA, clockB) {
         var keysA = Object.keys(clockA),
             keysB = Object.keys(clockB);
@@ -75,10 +81,22 @@ define(["./md5-min"], function () {
 
     }
 
+
+    /**
+     * Generates hex_md5 hash from the clock
+     * @param   {Clock}  clock
+     * @returns {String} hash of the clock
+     */
     function getHash(clock) {
         return hex_md5(JSON.stringify(clock));
     }
 
+    /**
+     * Increment the id in the clock
+     * @param   {Clock}    clock
+     * @param   {String} id    the id to increment
+     * @returns {Clock}  new clock
+     */
     function increment(clock, id) {
         clock[id] = clock[id] + 1 || 1;
         return clock;

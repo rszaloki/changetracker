@@ -16,12 +16,19 @@ define(["./clock"], function (Clock) {
         this.generateHash();
     }
 
+    /**
+     * [[Description]]
+     */
     ChangeSet.prototype.generateHash = function () {
         if (this.version === "" && this.clock !== null) {
             this.version = Clock.getHash(this.clock);
         }
     };
 
+    /**
+     * Sets the clock
+     * @param {Clock} clock
+     */
     ChangeSet.prototype.setClock = function (clock) {
         if (clock) {
             this.clock = clock;

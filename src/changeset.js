@@ -17,7 +17,7 @@ define(["./clock"], function (Clock) {
     }
 
     /**
-     * [[Description]]
+     * Generate hash from clock
      */
     ChangeSet.prototype.generateHash = function () {
         if (this.version === "" && this.clock !== null) {

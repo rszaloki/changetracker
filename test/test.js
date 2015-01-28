@@ -1,33 +1,87 @@
-/*global require*/
+/*global require, console*/
 require.config({
-    baseUrl: "../"
+    baseUrl: "../src"
 });
 
-require(["src/changelog", "src/changeset"], function (ChangeLog, ChangeSet) {
+require(["changelog", "sync"], function (ChangeLog, Sync) {
     "use strict";
 
-    var A;
+    var A, B, C;
 
-    window.ChangeSet = ChangeSet;
-    window.changeLog = A = new ChangeLog("A");
+    A = new ChangeLog("A");
+    B = new ChangeLog("B");
+    C = new ChangeLog("C");
 
-    changeLog.addChangeSet(new ChangeSet({
-        A: 5,
-        B: 2
-    }));
+    A.commit();
+    A.commit();
 
-    changeLog.addChangeSet(new ChangeSet({
-        A: 3,
-        B: 1
-    }));
+    console.log("A commit:");
+    A.dump();
+    console.log("---------");
 
-    changeLog.addChangeSet(new ChangeSet({
-        A: 4,
-        B: 2
-    }));
+    B.commit();
+
+    console.log("B commit:");
+    B.dump();
+    console.log("---------");
+
+    Sync.pull(A, B);
+
+    console.log("A pull B");
+    A.dump();
+    console.log("---------");
+
+    Sync.pull(B, A);
+
+    console.log("B pull A");
+    B.dump();
+    console.log("---------");
+
+    B.commit();
+
+    console.log("B commit:");
+    B.dump();
+    console.log("---------");
+
+    Sync.pull(A, B);
+
+    console.log("A pull B");
+    A.dump();
+    console.log("---------");
+
+    Sync.pull(B, A);
+
+    console.log("B pull A");
+    B.dump();
+    console.log("---------");
+
+    A.commit();
+
+    console.log("A commit:");
+    A.dump();
+    console.log("---------");
+
+    C.commit();
+
+    console.log("C commit:");
+    C.dump();
+    console.log("---------");
+
+    Sync.pull(A, C);
+
+    console.log("A pull C");
+    A.dump();
+    console.log("---------");
+
+    Sync.pull(C, A);
+
+    console.log("C pull A");
+    C.dump();
+    console.log("---------");
 
 
-
-
+    window.A = A;
+    window.B = B;
+    window.C = C;
 
 });

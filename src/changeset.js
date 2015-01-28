@@ -1,5 +1,5 @@
 /*global define*/
-define(["./clock"], function (Clock) {
+define(["clock"], function (Clock) {
 
     "use strict";
 
@@ -8,13 +8,25 @@ define(["./clock"], function (Clock) {
      * @param {Clock} clock changeset's clock
      */
     function ChangeSet(clock) {
-        this.version = "";
         this.previous = null;
         this.next = null;
+        this.version = "";
         this.clock = null;
         this.setClock(clock);
         this.generateHash();
     }
+
+    ChangeSet.fromObject = function (obj) {
+        var changeSet = new ChangeSet();
+        changeSet.setClock(obj.clock);
+        changeSet.version = obj.version;
+
+        return changeSet;
+    };
+
+    ChangeSet.dump = function (changeSet) {
+        return changeSet.version + " " + JSON.stringify(changeSet.clock);
+    };
 
     /**
      * Generate hash from clock
@@ -33,6 +45,17 @@ define(["./clock"], function (Clock) {
         if (clock) {
             this.clock = clock;
         }
+    };
+
+    ChangeSet.prototype.dump = function () {
+        return ChangeSet.dump(this);
+    };
+
+    ChangeSet.prototype.toJSON = function () {
+        return {
+            version: this.version,
+            clock: this.clock
+        };
     };
 
     return ChangeSet;

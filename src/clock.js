@@ -1,5 +1,5 @@
 /*global define, hex_md5*/
-define(["./md5-min"], function () {
+define(["md5-min"], function () {
     "use strict";
 
     /**
@@ -102,11 +102,21 @@ define(["./md5-min"], function () {
         return clock;
     }
 
+    /**
+     * Returns true, if clock has no id-s
+     * @param   {CLock}   clock
+     * @returns {Boolean}
+     */
+    function isEmpty(clock) {
+        return Object.keys(clock).length === 0;
+    }
+
     return {
         getMutualParent: getMutualParent,
         mergeClocks: mergeClocks,
         getHash: getHash,
         equals: equals,
-        increment: increment
+        increment: increment,
+        isEmpty: isEmpty
     };
 });
